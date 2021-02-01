@@ -1,40 +1,31 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faMarkdown } from "@fortawesome/free-brands-svg-icons";
 
 import PropTypes from "prop-types";
+import useKeyPress from "../hooks/useKeyPress";
 
 const FileList = ({ files, onFileClick, onSaveEdit, onFileDelete }) => {
   const [editStatus, setEditStatus] = useState(false);
   const [value, setValue] = useState("");
+  const enterPressed = useKeyPress(13);
+  const escPressed = useKeyPress(27);
 
-  const closeSearch = (event) => {
-    event.preventDefault();
+  const closeSearch = () => {
     setEditStatus(false);
     setValue("");
   };
 
   useEffect(() => {
-    const handleInputEvent = (event) => {
-      const { keyCode } = event;
-      if (keyCode === 13 && editStatus) {
-        // enter
-        const editItem = files.find((file) => file.id === editStatus);
-        onSaveEdit(editItem.id, value);
-        setEditStatus(false);
-        setValue("");
-      } else if (keyCode === 27 && editStatus) {
-        // esc
-        closeSearch(event);
-      }
-    };
-
-    document.addEventListener("keyup", handleInputEvent);
-
-    return () => {
-      document.removeEventListener("keyup", handleInputEvent);
-    };
+    if (enterPressed && editStatus) {
+      const editItem = files.find((file) => file.id === editStatus);
+      onSaveEdit(editItem.id, value);
+      setEditStatus(false);
+      setValue("");
+    } else if (escPressed && editStatus) {
+      closeSearch();
+    }
   });
 
   return (
@@ -80,7 +71,7 @@ const FileList = ({ files, onFileClick, onSaveEdit, onFileDelete }) => {
             <>
               <input
                 value={value}
-                className="form-control mr-2 col-10"
+                className="form-control col-10"
                 onChange={(e) => {
                   setValue(e.target.value);
                 }}
