@@ -32,7 +32,7 @@ const FileList = ({ files, onFileClick, onSaveEdit, onFileDelete }) => {
     <ul className="list-group list-group-flush file-list">
       {files.map((file) => (
         <li
-          className="list-group-item row d-flex align-items-center file-item"
+          className="list-group-item row d-flex align-items-center file-item mx-0"
           key={file.id}
         >
           {file.id !== editStatus && (
@@ -41,12 +41,12 @@ const FileList = ({ files, onFileClick, onSaveEdit, onFileDelete }) => {
                 <FontAwesomeIcon size="lg" icon={faMarkdown} />
               </span>
               <span
-                className="col-8 c-link"
+                className="col-6 c-link"
                 onClick={() => onFileClick(file.id)}
               >
                 {file.title}
               </span>
-              <button type="button" className="col-1 icon-button">
+              <button type="button" className="col-2 icon-button">
                 <FontAwesomeIcon
                   title="编辑"
                   size="lg"
@@ -59,7 +59,7 @@ const FileList = ({ files, onFileClick, onSaveEdit, onFileDelete }) => {
               </button>
               <button
                 type="button"
-                className="col-1 icon-button"
+                className="col-2 icon-button"
                 onClick={() => onFileDelete(file.id)}
               >
                 <FontAwesomeIcon title="删除" size="lg" icon={faTrash} />
