@@ -1,12 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { faPlus, faFileImport } from "@fortawesome/free-solid-svg-icons";
-
-import "./App.css";
+import SimpleMDE from "react-simplemde-editor";
 import FileSearch from "./components/FileSearch";
 import FileList from "./components/FileList";
 import defaultFiles from "./utils/defaultFiles";
 import BottomBtn from "./components/BottomBtn";
 import TabList from "./components/TabList";
+import "easymde/dist/easymde.min.css";
+import "./App.css";
 
 function App() {
   return (
@@ -60,6 +61,13 @@ function App() {
             unsaveIds={["1", "2"]}
             onTabClick={(id) => console.log(id)}
             onCloseTab={(id) => console.log("closing", id)}
+          />
+          <SimpleMDE
+            value={defaultFiles[1].body}
+            onChange={(value) => console.log(value)}
+            options={{
+              minHeight: "510px",
+            }}
           />
         </div>
       </div>
